@@ -56,20 +56,54 @@ while true
        if currentYpos > targetY
            currentYpos = currentYpos - 0.3;
        else
+            currentYpos = targetY;
+            offset = stackYpos - currentYpos;
+            if currentWidth <= abs(offset)
+                break;
+            end
+
+            if offset > 0
+                stackXpos = currentXpos;
+            end
+
+            stackWidth = currentWidth - abs(offset);
+            stackYpos = currentYpos;
+
+         
            rectangle('Position', [currentXpos currentYpos currentWidth currentHeight], 'FaceColor', 'b', 'EdgeColor', 'w');
           %draws the block after it lands on the stack
 
-           stackXpos = currentXpos;
-           stackYpos = currentYpos;
-           stackWidth = currentWidth;
-           stackHeight = currentHeight;
+           %stackXpos = currentXpos;
+           %stackYpos = currentYpos;
+           %stackWidth = currentWidth;
+           %stackHeight = currentHeight;
         
            currentXpos = 1;
            currentYpos = 17;
+           currentWidth=stackWidth;
            direction = 0.2;
            drop = false;
            delete(topBlock);
            topBlock = rectangle('Position', [currentXpos currentYpos currentWidth currentHeight], 'FaceColor', 'b', 'EdgeColor', 'w')
+      
+       end
+           offset = currentXpos - stackXpos;
+       if abs(offset) >= currentWidth
+           break;
+       else
+           newWidth = currentWidth - abs(offset);
+           if offset > 1
+               newXpos=currentXpos;
+           else
+               newXpos = stackXpos;
+           end
+           
+           stackXpos = newXpos;
+           stackWidth = newWidth;
+           currentWidth = newWidth;
+
+           rectangle('Position', [stackXpos stackYpos stackWidth stackHeight], 'FaceColor', 'b', 'EdgeColor', 'w');
+
        end
       %makes the landed block the new top of the stack and creates a new
       %moving block
@@ -82,7 +116,8 @@ while true
            direction = -direction;
        end
        % keeps the moving block from going past the screen edges
-  end
+   end 
+
   set(topBlock, 'Position', [currentXpos currentYpos currentWidth currentHeight])
   % Updates the top block's position on the screen
 
