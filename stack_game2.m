@@ -3,14 +3,14 @@ clc;
 
 gameHeight = 18;
 gameWidth = 18;
-
 % game size
+
 blockXpos = 7.5;
 blockYpos = 1;
 blockHeight = 1;
 blockWidth = 2.5;
-
 % bottom block size and position
+
 currentXpos = 1;
 currentYpos = 17;
 currentHeight = 1;
@@ -33,7 +33,7 @@ hold on;
 % sets the game area, border, colors, and removes axis numbers
 
 disableDefaultInteractivity(gca)
-% turns off default graph interactions like zooming and dragging
+% turns off default graph interactions like zooming and draggin
 
 stackXpos = blockXpos;
 stackYpos = blockYpos;
@@ -53,84 +53,63 @@ drawnow
 while true
    if drop
        targetY = stackYpos + stackHeight;
-       if currentYpos > targetY
+       if currentYpos > targetY + 0.3
            currentYpos = currentYpos - 0.3;
        else
-            currentYpos = targetY;
-            offset = stackYpos - currentYpos;
-            if currentWidth <= abs(offset)
-                break;
-            end
+           currentYpos = targetY;
+           newX=currentXpos;
+           if currentXpos~=stackXpos
+               offset = stackXpos - currentXpos;
+               newX = max(stackXpos, currentXpos);
+               currentWidth = stackWidth - abs(offset);
+           end
+           if currentWidth <=0
+               break;
+           end
 
-            if offset > 0
-                stackXpos = currentXpos;
-            end
-
-            stackWidth = currentWidth - abs(offset);
-            stackYpos = currentYpos;
-
-         
-           rectangle('Position', [currentXpos currentYpos currentWidth currentHeight], 'FaceColor', 'b', 'EdgeColor', 'w');
+           rectangle('Position', [newX, currentYpos currentWidth currentHeight], 'FaceColor', 'b', 'EdgeColor', 'w');
           %draws the block after it lands on the stack
-
-           %stackXpos = currentXpos;
-           %stackYpos = currentYpos;
-           %stackWidth = currentWidth;
-           %stackHeight = currentHeight;
+           
+          stackXpos = currentXpos;
+           stackYpos = currentYpos;
+           stackWidth = currentWidth;
+           stackHeight = currentHeight;
         
            currentXpos = 1;
            currentYpos = 17;
-           currentWidth=stackWidth;
            direction = 0.2;
            drop = false;
            delete(topBlock);
            topBlock = rectangle('Position', [currentXpos currentYpos currentWidth currentHeight], 'FaceColor', 'b', 'EdgeColor', 'w')
-      
-       end
-           offset = currentXpos - stackXpos;
-       if abs(offset) >= currentWidth
-           break;
-       else
-           newWidth = currentWidth - abs(offset);
-           if offset > 1
-               newXpos=currentXpos;
-           else
-               newXpos = stackXpos;
-           end
-           
-           stackXpos = newXpos;
-           stackWidth = newWidth;
-           currentWidth = newWidth;
-
-           rectangle('Position', [stackXpos stackYpos stackWidth stackHeight], 'FaceColor', 'b', 'EdgeColor', 'w');
-
        end
       %makes the landed block the new top of the stack and creates a new
       %moving block
-     
    else
        currentXpos = currentXpos + direction;
        % updates horizontal positions of moving block
-
+       
        if currentXpos <= 0 ||  currentXpos + direction >= 15.5
            direction = -direction;
        end
        % keeps the moving block from going past the screen edges
-   end 
-
+  
+   end
   set(topBlock, 'Position', [currentXpos currentYpos currentWidth currentHeight])
-  % Updates the top block's position on the screen
-
+  % updates the top block's position on the screen
+  
   drawnow
-  % Refereshes the screen so movement is visible
+  %refereshes the screen so movement is visible
+   
+  pause(0.02); % Control the speed of the loop
+  %controls the speed of the loop
 
-   pause(0.02);
-  % Controls the speed of the loop
 end
+
 function keyPress(~,event)
   global drop
   if strcmp(event.Key,'space')
       drop=true;
   end
-% Makes the block drop when space is pressed
+% makes the block drop when space is pressed
+
 end
