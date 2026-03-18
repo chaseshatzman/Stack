@@ -68,12 +68,6 @@ while true
                break;
              end
 
-             if stackYpos >= gameHeight -2
-    %rectangle('Position', [newX, currentYpos 0 0], 'FaceColor', 'k', 'EdgeColor', 'k');
-    %drop=false
-    break;
-             end
-
            if currentXpos~=stackXpos
                offset = stackXpos - currentXpos;
                if offset > 0
@@ -101,6 +95,13 @@ while true
            stackYpos = currentYpos;
            stackWidth = currentWidth;
            stackHeight = currentHeight;
+
+          if stackYpos >= gameHeight -1
+    %rectangle('Position', [newX, currentYpos 0 0], 'FaceColor', 'k', 'EdgeColor', 'k');
+    %drop=false
+          delete(topBlock)
+          break;
+          end
         
            currentXpos = 1;
            currentYpos = 17;
@@ -145,3 +146,4 @@ function keyPress(~,event)
 % makes the block drop when space is pressed
 
 end
+
