@@ -8,13 +8,13 @@ gameWidth = 18;
 blockXpos = 7.5;
 blockYpos = 1;
 blockHeight = 1;
-blockWidth = 2.5;
+blockWidth = 6.5;
 % bottom block size and position
 
 currentXpos = 1;
 currentYpos = 17;
 currentHeight = 1;
-currentWidth = 2.5;
+currentWidth = 6.5;
 direction = 0.2;
 % moving block size and starting position
 
@@ -55,22 +55,49 @@ while true
        targetY = stackYpos + stackHeight;
        if currentYpos > targetY + 0.3
            currentYpos = currentYpos - 0.3;
+           disp('dropping')
        else
            currentYpos = targetY;
+           disp(currentYpos)
+           disp(targetY)
            newX=currentXpos;
+           disp(currentXpos)
+           disp(stackXpos)
+
+             if currentWidth <=0
+               break;
+             end
+
+             if stackYpos >= gameHeight -2
+    %rectangle('Position', [newX, currentYpos 0 0], 'FaceColor', 'k', 'EdgeColor', 'k');
+    %drop=false
+    break;
+             end
+
            if currentXpos~=stackXpos
                offset = stackXpos - currentXpos;
-               newX = max(stackXpos, currentXpos);
+               if offset > 0
+                   newX=stackXpos;
+                   disp(newX)
+                   disp(stackXpos)
+               else
+                   newX=currentXpos;
+                   disp(newX)
+                   disp(currentXpos)
+               end
                currentWidth = stackWidth - abs(offset);
+               disp('calculting offset')
+               disp(offset)
            end
-           if currentWidth <=0
-               break;
-           end
+           %if currentWidth <=0
+            %   break;
+           %end
 
            rectangle('Position', [newX, currentYpos currentWidth currentHeight], 'FaceColor', 'b', 'EdgeColor', 'w');
+           disp('new rectangle')
           %draws the block after it lands on the stack
            
-          stackXpos = currentXpos;
+          stackXpos = newX;
            stackYpos = currentYpos;
            stackWidth = currentWidth;
            stackHeight = currentHeight;
@@ -93,6 +120,11 @@ while true
        end
        % keeps the moving block from going past the screen edges
   
+   %if stackYpos >= gameHeight -1
+    %rectangle('Position', [newX, currentYpos 0 0], 'FaceColor', 'k', 'EdgeColor', 'k');
+    %drop=false
+    %break;
+%end
    end
   set(topBlock, 'Position', [currentXpos currentYpos currentWidth currentHeight])
   % updates the top block's position on the screen
