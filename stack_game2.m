@@ -8,13 +8,13 @@ gameWidth = 18;
 blockXpos = 7.5;
 blockYpos = 1;
 blockHeight = 1;
-blockWidth = 6.5;
+blockWidth = 2.5;
 % bottom block size and position
 
 currentXpos = 1;
 currentYpos = 17;
 currentHeight = 1;
-currentWidth = 6.5;
+currentWidth = 2.5;
 direction = 0.2;
 % moving block size and starting position
 
@@ -64,12 +64,35 @@ while true
            disp(currentXpos)
            disp(stackXpos)
 
-             if currentWidth <=0
+           offset = stackXpos - currentXpos;  
+              if abs(offset) >= currentWidth
+                  if currentXpos + currentWidth < 7.5 || currentXpos > 10
+                      targetFloor=1;
+                  else
+                  targetFloor = blockYpos + blockHeight;
+
+                  end
+                 while currentYpos > targetFloor
+                     currentYpos = currentYpos - 0.5;
+                     if currentYpos < targetFloor
+                         currentYpos = targetFloor;
+                     end
+                     set(topBlock,'Position', [currentXpos targetFloor currentWidth currentHeight], 'FaceColor', 'b', 'EdgeColor', 'w');
+                     drawnow;
+                     pause(0.02);
+
+                 end
+
+                 set(topBlock,'Position', [currentXpos targetFloor currentWidth currentHeight], 'FaceColor', 'b', 'EdgeColor', 'w');
+                 drawnow;
+                 pause(0.02);
+
+                 delete(topBlock) 
                break;
              end
 
            if currentXpos~=stackXpos
-               offset = stackXpos - currentXpos;
+               %offset = stackXpos - currentXpos;
                if offset > 0
                    newX=stackXpos;
                    disp(newX)
