@@ -42,7 +42,7 @@ stackHeight = blockHeight;
 % stores the current top block of the stack
 
 rectangle('Position', [stackXpos stackYpos stackWidth stackHeight], 'FaceColor', 'b', 'EdgeColor', 'w');
-% bottom block appearance
+% making bottom block appear
 
 topBlock = rectangle('Position', [currentXpos currentYpos currentWidth currentHeight], 'FaceColor', 'b', 'EdgeColor', 'w')
 % top moving block appearance
@@ -55,101 +55,67 @@ while true
        targetY = stackYpos + stackHeight;
        if currentYpos > targetY + 0.3
            currentYpos = currentYpos - 0.3;
-           disp('dropping')
        else
            currentYpos = targetY;
-           disp(currentYpos)
-           disp(targetY)
            newX=currentXpos;
-           disp(currentXpos)
-           disp(stackXpos)
+        
 
            offset = stackXpos - currentXpos;  
               if abs(offset) >= currentWidth
-                  if currentXpos + currentWidth < 7.5 || currentXpos > 10
-                      targetFloor=1;
-                  else
-                  targetFloor = blockYpos + blockHeight;
-
+                  if (currentXpos + currentWidth > 7.5) && (currentXpos < 10)
+                      targetFloor = stackYpos - 2 ;
+                  else 
+                      targetFloor = 0;
+                  end 
+                 
+                  while currentYpos > targetFloor
+                      currentYpos = currentYpos - 0.5;
+                      if currentYpos < targetFloor
+                        currentYpos = targetFloor;
+                      end
+                      set(topBlock, 'Position', [currentXpos currentYpos currentWidth currentHeight], 'FaceColor', 'b', 'EdgeColor', 'w');
+                      drawnow;
+                      pause(0.02);
                   end
-                 while currentYpos > targetFloor
-                     currentYpos = currentYpos - 0.5;
-                     if currentYpos < targetFloor
-                         currentYpos = targetFloor;
-                     end
-                     set(topBlock,'Position', [currentXpos targetFloor currentWidth currentHeight], 'FaceColor', 'b', 'EdgeColor', 'w');
-                     drawnow;
-                     pause(0.02);
-
-                 end
-
-                 set(topBlock,'Position', [currentXpos targetFloor currentWidth currentHeight], 'FaceColor', 'b', 'EdgeColor', 'w');
-                 drawnow;
-                 pause(0.02);
-
-                 delete(topBlock) 
-               break;
-             end
-
-           if currentXpos~=stackXpos
-               %offset = stackXpos - currentXpos;
-               if offset > 0
-                   newX=stackXpos;
-                   disp(newX)
-                   disp(stackXpos)
-               else
-                   newX=currentXpos;
-                   disp(newX)
-                   disp(currentXpos)
-               end
-               currentWidth = stackWidth - abs(offset);
-               disp('calculting offset')
-               disp(offset)
-           end
-           %if currentWidth <=0
-            %   break;
-           %end
-
-           rectangle('Position', [newX, currentYpos currentWidth currentHeight], 'FaceColor', 'b', 'EdgeColor', 'w');
-           disp('new rectangle')
-          %draws the block after it lands on the stack
-           
-          stackXpos = newX;
-           stackYpos = currentYpos;
-           stackWidth = currentWidth;
-           stackHeight = currentHeight;
-
-          if stackYpos >= gameHeight -1
-    %rectangle('Position', [newX, currentYpos 0 0], 'FaceColor', 'k', 'EdgeColor', 'k');
-    %drop=false
-          delete(topBlock)
-          break;
-          end
-        
-           currentXpos = 1;
-           currentYpos = 17;
-           direction = 0.2;
-           drop = false;
-           delete(topBlock);
-           topBlock = rectangle('Position', [currentXpos currentYpos currentWidth currentHeight], 'FaceColor', 'b', 'EdgeColor', 'w')
-       end
-      %makes the landed block the new top of the stack and creates a new
-      %moving block
+                  set(topBlock, 'Position', [currentXpos currentYpos currentWidth currentHeight], 'FaceColor', 'b', 'EdgeColor', 'w')
+                  drawnow;
+                  pause(0.02); 
+                  delete(topBlock)
+                  break
+              end
+              if currentXpos ~= stackXpos
+                  if offset > 0 
+                      newX = stackXpos;
+                      disp(newX)
+                      disp(stackXpos)
+                  else
+                      newX = currentXpos;     
+                  end
+                  currentWidth = stackWidth - abs(offset);
+              end
+              rectangle ('Position', [newX, currentYpos currentWidth currentHeight], 'FaceColor', 'b', 'EdgeColor', 'w');
+              stackXpos = newX;
+              stackYpos = currentYpos;
+              stackWidth = currentWidth;
+              stackHeight = currentHeight;
+              if stackYpos >= gameHeight - 1
+                  delete(topBlock)
+                  break
+              end
+              currentXpos = 1;
+              currentYpos = 17;
+              direction = 0.2;
+              drop = false;
+              delete(topBlock); ...
+              topBlock = rectangle ('Position', [currentXpos currentYpos currentWidth currentHeight], 'FaceColor', 'b', 'EdgeColor', 'w');
+       end 
    else
        currentXpos = currentXpos + direction;
-       % updates horizontal positions of moving block
-       
-       if currentXpos <= 0 ||  currentXpos + direction >= 15.5
-           direction = -direction;
+       if currentXpos <= 0 || currentXpos + direction >=15.5
+            direction = -direction;
        end
-       % keeps the moving block from going past the screen edges
-  
-   %if stackYpos >= gameHeight -1
-    %rectangle('Position', [newX, currentYpos 0 0], 'FaceColor', 'k', 'EdgeColor', 'k');
-    %drop=false
-    %break;
-%end
-   end
+   end 
+
   set(topBlock, 'Position', [currentXpos currentYpos currentWidth currentHeight])
   % updates the top block's position on the screen
   
@@ -158,8 +124,7 @@ while true
    
   pause(0.02); % Control the speed of the loop
   %controls the speed of the loop
-
-end
+  end
 
 function keyPress(~,event)
   global drop
@@ -169,4 +134,5 @@ function keyPress(~,event)
 % makes the block drop when space is pressed
 
 end
+
 
