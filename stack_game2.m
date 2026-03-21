@@ -8,13 +8,13 @@ gameWidth = 18;
 blockXpos = 7.5;
 blockYpos = 1;
 blockHeight = 1;
-blockWidth = 2.5;
+blockWidth = 6.5;
 % bottom block size and position
 
 currentXpos = 1;
 currentYpos = 17;
 currentHeight = 1;
-currentWidth = 2.5;
+currentWidth = 6.5;
 direction = 0.2;
 % moving block size and starting position
 
@@ -81,6 +81,7 @@ while true
                   drawnow;
                   pause(0.02); 
                   delete(topBlock)
+                  text(gameWidth/2, gameHeight/2, 'GAME OVER', 'Color', 'r', 'FontSize', 30, 'HorizontalAlignment', 'center')
                   break
               end
               if currentXpos ~= stackXpos
@@ -100,6 +101,7 @@ while true
               stackHeight = currentHeight;
               if stackYpos >= gameHeight - 1
                   delete(topBlock)
+                  text(gameWidth/2, gameHeight/2, 'YOU WIN', 'Color', 'g', 'FontSize', 30, 'HorizontalAlignment', 'center')
                   break
               end
               currentXpos = 1;
@@ -111,7 +113,7 @@ while true
        end 
    else
        currentXpos = currentXpos + direction;
-       if currentXpos <= 0 || currentXpos + direction >=15.5
+       if currentXpos <= 0 || currentXpos >= 18 - currentWidth
             direction = -direction;
        end
    end 
