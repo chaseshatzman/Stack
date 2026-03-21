@@ -8,13 +8,13 @@ gameWidth = 18;
 blockXpos = 7.5;
 blockYpos = 1;
 blockHeight = 1;
-blockWidth = 6.5;
+blockWidth = 3;
 % bottom block size and position
 
 currentXpos = 1;
 currentYpos = 17;
 currentHeight = 1;
-currentWidth = 6.5;
+currentWidth = 3;
 direction = 0.2;
 % moving block size and starting position
 
