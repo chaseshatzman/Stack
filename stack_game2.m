@@ -55,6 +55,7 @@ while true
        targetY = stackYpos + stackHeight;
        if currentYpos > targetY + 0.3
            currentYpos = currentYpos - 0.3;
+           %moves top block down when space is pressed
        else
            currentYpos = targetY;
            newX=currentXpos;
@@ -64,12 +65,20 @@ while true
               if abs(offset) >= currentWidth
                   if (currentXpos + currentWidth > 7.5) && (currentXpos < 10)
                       targetFloor = stackYpos - 2 ;
+                      %when block drops on stack but not the topmost 
+                      %block on the stack, it makes it fall and delete
                   else 
                       targetFloor = 0;
+                      %when block misses stack completely, it falls to the
+                      %bottom
                   end 
                  
+                  %hows block fallign
                   while currentYpos > targetFloor
                       currentYpos = currentYpos - 0.5;
+                      
+                      %conditional for if -0.5 maeks block fall below
+                      %targetFloor
                       if currentYpos < targetFloor
                         currentYpos = targetFloor;
                       end
@@ -77,6 +86,8 @@ while true
                       drawnow;
                       pause(0.02);
                   end
+                  
+                  %sets fallen block at coordinates, then deletes it
                   set(topBlock, 'Position', [currentXpos currentYpos currentWidth currentHeight], 'FaceColor', 'b', 'EdgeColor', 'w')
                   drawnow;
                   pause(0.02); 
@@ -84,37 +95,46 @@ while true
                   text(gameWidth/2, gameHeight/2, 'GAME OVER', 'Color', 'r', 'FontSize', 30, 'HorizontalAlignment', 'center')
                   break
               end
+              %trims and aligns blocks based off offset
               if currentXpos ~= stackXpos
                   if offset > 0 
                       newX = stackXpos;
-                      disp(newX)
-                      disp(stackXpos)
                   else
                       newX = currentXpos;     
                   end
                   currentWidth = stackWidth - abs(offset);
               end
+
+              %adds rectangle into stack
               rectangle ('Position', [newX, currentYpos currentWidth currentHeight], 'FaceColor', 'b', 'EdgeColor', 'w');
+              
+              %updates values in stack because new block was added
               stackXpos = newX;
               stackYpos = currentYpos;
               stackWidth = currentWidth;
               stackHeight = currentHeight;
+              
+              %deletes moving block generated when at top of game screen
               if stackYpos >= gameHeight - 1
                   delete(topBlock)
                   text(gameWidth/2, gameHeight/2, 'YOU WIN', 'Color', 'g', 'FontSize', 30, 'HorizontalAlignment', 'center')
                   break
               end
+              
+              %creates new moving block at the top of screen
               currentXpos = 1;
               currentYpos = 17;
               direction = 0.2;
               drop = false;
-              delete(topBlock); ...
+              delete(topBlock); 
               topBlock = rectangle ('Position', [currentXpos currentYpos currentWidth currentHeight], 'FaceColor', 'b', 'EdgeColor', 'w');
        end 
    else
        currentXpos = currentXpos + direction;
        if currentXpos <= 0 || currentXpos >= 18 - currentWidth
             direction = -direction;
+            %moves moving block at top of screen back and forth
+            % from left of gamescreen to right
        end
    end 
 
@@ -124,7 +144,7 @@ while true
   drawnow
   %refereshes the screen so movement is visible
    
-  pause(0.02); % Control the speed of the loop
+  pause(0.02);
   %controls the speed of the loop
   end
 
