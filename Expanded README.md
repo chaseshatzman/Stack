@@ -10,6 +10,14 @@ Our biggest triumph was getting the offset to subtract and disappear when the bl
 
 Our biggest "aha" moment was when we figured out why our moving block wasn't reaching the right end of the screen while it was moving back and forth. Though initially it moved back and forth seamlessly, as the block got smaller throughout the game it got farther from the right end of the screen. We realized eventually that this was because we hardcoded the right end of the game screen rather than having it be dependent on the block's width, which shrinks throughout the game. Thus by rewriting it as currentXpos >= 18 - currentWidth, we made it so the collision boundary was calculated depending on the X position and width of the block rather than tailoring it to the dimensions of the block's original size. This solved our issue!
 
+Winning example (Scan QR Code to view!)
+<img width="159" height="201" alt="Screenshot 2026-03-21 at 11 29 41 PM" src="https://github.com/user-attachments/assets/8a0eb82a-1e30-474a-89f0-711413e15049" />
+
+Losing example (Scan QR Code to view!)
+<img width="356" height="457" alt="Screenshot 2026-03-21 at 9 23 24 PM" src="https://github.com/user-attachments/assets/ff6eab8f-80b3-49d9-8925-14f7cd461454" />
+
+
+
 Timeline for Coding 
 
 March 9th - Met to outline our ideas for stack game as well as created files on matlab for program 
