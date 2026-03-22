@@ -8,3 +8,5 @@ Our code was all implemented and displayed under the file name "stack_game2.m", 
 We hope you enjoy playing our stack game! (Press Space to "Stack") 
 
 .. Attached is the following link to our expanded README.md
+
+https://github.com/chaseshatzman/Stack/blob/master/Expanded%20README.md
