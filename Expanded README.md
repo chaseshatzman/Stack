@@ -24,7 +24,7 @@ Coder = Nainika (4 hours)
 Debugger = Chase (1.5 hours) 
 
 March 15 - Fixing unresolved bugs in previous code in order to not move the bottom block and made the top block move horizontally until the end of the screen. Created the space bar key press in order for a block to drop after the space key is pressed onto the previous block at the bottom (making the blocks stack on top of one another) ← Fixing / adding to lines 1-64
-Coder = Chase = (9 hours) 
+Coder = Chase =  (9 hours) 
 Debugger = Nainika (6 hours) 
 
 March 16 - First attempt to subtract the "offset" / extra part of the block when the blocks are not perfectly aligned ← Lines 88- 106 + edits on lines 59-72
